@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BNRItem : NSManagedObject
 
 // Insert code here to declare functionality of your managed object subclass
+- (void)setThumbnailFromImage: (UIImage *)image;
 
 @end
 

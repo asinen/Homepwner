@@ -10,19 +10,20 @@
 //
 
 #import "BNRItem.h"
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BNRItem (CoreDataProperties)
 
-@property (nullable, nonatomic, retain) NSString *itemName;
-@property (nullable, nonatomic, retain) NSString *serialNumber;
-@property (nullable, nonatomic, retain) NSNumber *valueInDollars;
-@property (nullable, nonatomic, retain) NSDate *dateCreated;
-@property (nullable, nonatomic, retain) NSString *itemKey;
-@property (nullable, nonatomic, retain) id thumbnail;
-@property (nullable, nonatomic, retain) NSNumber *orderingValue;
-@property (nullable, nonatomic, retain) NSManagedObject *assetType;
+@property (nonatomic, strong) NSString *itemName;
+@property (nonatomic, strong) NSString *serialNumber;
+@property (nonatomic) int valueInDollars;
+@property (nonatomic, strong) NSDate *dateCreated;
+@property (nonatomic, strong) NSString *itemKey;
+@property (nonatomic, strong) UIImage *thumbnail;
+@property (nonatomic) double orderingValue;
+@property (nonatomic, strong) NSManagedObject *assetType;
 
 @end
 
