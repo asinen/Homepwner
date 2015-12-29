@@ -9,8 +9,11 @@
 #import "BNRItemsViewController.h"
 #import "BNRItemStore.h"
 #import "BNRItem.h"
+#import "BNRImageStore.h"
+#import "BNRImageViewController.h"
 
-@interface BNRItemsViewController ()
+@interface BNRItemsViewController () <UIPopoverControllerDelegate>
+@property (nonatomic, strong) UIPopoverController *imagePopover;
 
 //@property (nonatomic, strong) IBOutlet UIView *headerView;
 
@@ -21,10 +24,25 @@
 - (IBAction)addNewItem:(id)sender
 {
     BNRItem *newItem = [[BNRItemStore sharedStore] creatItem];
-    NSInteger lastRow = [[[BNRItemStore sharedStore] allItems] indexOfObject:newItem];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:lastRow inSection:0];
+//    NSInteger lastRow = [[[BNRItemStore sharedStore] allItems] indexOfObject:newItem];
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:lastRow inSection:0];
+//    
+//    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+    BNRDetailViewController *detailViewController = [[BNRDetailViewController alloc] initForNewItem:YES];
     
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+    detailViewController.item = newItem;
+    
+    detailViewController.dismissBlock = ^{
+        [self.tableView reloadData];
+    };
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+    
+    navController.modalPresentationStyle = UIModalPresentationFormSheet;
+
+    navController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 
@@ -40,10 +58,18 @@
         navItem.rightBarButtonItem = bbi;
         
         navItem.leftBarButtonItem = self.editButtonItem;
+        
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver:self selector:@selector(updateTableViewForDynamicTypeSize) name:UIContentSizeCategoryDidChangeNotification object:nil];
     }
     return self;
 }
 
+- (void)dealloc
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self];
+}
 - (instancetype) initWithStyle:(UITableViewStyle)style
 {
     return [self init];
@@ -52,20 +78,49 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[[BNRItemStore sharedStore] allItems] count] + 1;
+    return [[[BNRItemStore sharedStore] allItems] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
+    BNRItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BNRItemCell" forIndexPath:indexPath];
     NSArray *items = [[BNRItemStore sharedStore] allItems];
     if (indexPath.row < [items count]) {
         BNRItem *item = items[indexPath.row];
-        cell.textLabel.text = [item description];
-    }else if (indexPath.row == [items count])
-    {
-        cell.textLabel.text = @"No more items!";
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.nameLabel.text = item.itemName;
+        cell.serialNumberLabel.text = item.serialNumber;
+        cell.valueLabel.text = [NSString stringWithFormat:@"$%d", item.valueInDollars];
+        if (item.valueInDollars > 50) {
+            cell.valueLabel.textColor = [UIColor greenColor];
+        } else
+            cell.valueLabel.textColor = [UIColor redColor];
+        cell.thumbnailView.image = item.thumbnail;
+        
+        __weak BNRItemCell *weakCell = cell;
+        cell.actionBlock = ^{
+            NSLog(@"Going to show iamge for %@", item);
+            
+            BNRItemCell *strongCell = weakCell;
+            
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+                NSString *itemKey = item.itemKey;
+                
+                UIImage *img = [[BNRImageStore sharedStore] imageForKey:itemKey];
+                if (!img) {
+                    return;
+                }
+                
+                CGRect rect = [self.view convertRect:strongCell.thumbnailView.bounds fromView:strongCell.thumbnailView];
+                
+                BNRImageViewController *ivc = [[BNRImageViewController alloc] init];
+                ivc.image = img;
+                
+                self.imagePopover =[[UIPopoverController alloc] initWithContentViewController:ivc];
+                self.imagePopover.delegate = self;
+                self.imagePopover.popoverContentSize = CGSizeMake(600, 600);
+                [self.imagePopover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+            }
+        };
     }
     
     return cell;
@@ -75,7 +130,9 @@
 {
     [super viewDidLoad];
     
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
+    UINib *nib = [UINib nibWithNibName:@"BNRItemCell" bundle:nil];
+    
+    [self.tableView registerNib:nib forCellReuseIdentifier:@"BNRItemCell"];
     
 }
 
@@ -127,7 +184,7 @@
 - (void)tableView: (UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
     if (indexPath.row < [[[BNRItemStore sharedStore] allItems] count]) {
-        BNRDetailViewController *detailViewController = [[BNRDetailViewController alloc] init];
+        BNRDetailViewController *detailViewController = [[BNRDetailViewController alloc] initForNewItem:NO];
         
         NSArray *items = [[BNRItemStore sharedStore] allItems];
         BNRItem *selectedItem = items[indexPath.row];
@@ -143,6 +200,35 @@
 {
     [super viewWillAppear:animated];
     
+    [self updateTableViewForDynamicTypeSize];
+}
+
+- (void)updateTableViewForDynamicTypeSize
+{
+    static NSDictionary *cellHeightDictionary;
+    
+    if (!cellHeightDictionary) {
+        cellHeightDictionary = @{UIContentSizeCategoryExtraSmall: @44,
+                                 UIContentSizeCategorySmall: @44,
+                                 UIContentSizeCategoryMedium: @44,
+                                 UIContentSizeCategoryLarge: @44,
+                                 UIContentSizeCategoryExtraLarge: @55,
+                                 UIContentSizeCategoryExtraExtraLarge: @65,
+                                 UIContentSizeCategoryExtraExtraExtraLarge: @75
+                                 };
+    }
+    
+    NSString *userSize = [[UIApplication sharedApplication] preferredContentSizeCategory];
+        
+    NSNumber *cellHeight = cellHeightDictionary[userSize];
+    [self.tableView setRowHeight:cellHeight.floatValue];
     [self.tableView reloadData];
 }
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    self.imagePopover = nil;
+}
+
 @end
+

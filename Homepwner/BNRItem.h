@@ -1,24 +1,22 @@
 //
 //  BNRItem.h
-//  RandomItems
+//  Homepwner
 //
-//  Created by 倪之欣 on 15/10/23.
+//  Created by 倪之欣 on 15/12/29.
 //  Copyright © 2015年 倪之欣. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface BNRItem : NSObject
+NS_ASSUME_NONNULL_BEGIN
 
-@property (nonatomic, copy)NSString *itemName;
-@property (nonatomic, copy)NSString *serialNumber;
-@property (nonatomic)int valueInDollars;
-@property (nonatomic, strong)NSDate *dateCreated;
-@property (nonatomic, copy)NSString *itemKey;
+@interface BNRItem : NSManagedObject
 
-- (instancetype)initWithItemName: (NSString *) name valueInDollars:(int)value serialNumber:(NSString *)sNumber;
-- (instancetype)initWithItemName: (NSString *)name;
-- (instancetype)initWithItemName:(NSString *)name serialNumber:(NSString *)sNumber;
+// Insert code here to declare functionality of your managed object subclass
 
-+ (instancetype)randomItem;
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "BNRItem+CoreDataProperties.h"
