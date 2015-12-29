@@ -12,6 +12,7 @@
 		A47852C91C32B1F500C66B78 /* BNRImageTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = A47852C81C32B1F500C66B78 /* BNRImageTransformer.m */; };
 		A47852DA1C32D2B800C66B78 /* BNRItem+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A47852D71C32D2B800C66B78 /* BNRItem+CoreDataProperties.m */; };
 		A47852DB1C32D2B800C66B78 /* BNRItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A47852D91C32D2B800C66B78 /* BNRItem.m */; };
+		A47852DE1C3336D200C66B78 /* BNRAssetTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47852DD1C3336D200C66B78 /* BNRAssetTypeViewController.m */; };
 		A4A7C71E1BE52CDE007D2582 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C71D1BE52CDE007D2582 /* main.m */; };
 		A4A7C7211BE52CDE007D2582 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C7201BE52CDE007D2582 /* AppDelegate.m */; };
 		A4A7C7231BE52CDE007D2582 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4A7C7221BE52CDE007D2582 /* Assets.xcassets */; };
@@ -57,6 +58,8 @@
 		A47852D71C32D2B800C66B78 /* BNRItem+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BNRItem+CoreDataProperties.m"; sourceTree = "<group>"; };
 		A47852D81C32D2B800C66B78 /* BNRItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNRItem.h; sourceTree = "<group>"; };
 		A47852D91C32D2B800C66B78 /* BNRItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNRItem.m; sourceTree = "<group>"; };
+		A47852DC1C3336D200C66B78 /* BNRAssetTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNRAssetTypeViewController.h; sourceTree = "<group>"; };
+		A47852DD1C3336D200C66B78 /* BNRAssetTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNRAssetTypeViewController.m; sourceTree = "<group>"; };
 		A4A7C7191BE52CDE007D2582 /* Homepwner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Homepwner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4A7C71D1BE52CDE007D2582 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A4A7C71F1BE52CDE007D2582 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -159,6 +162,8 @@
 				A4A7C75B1BE96306007D2582 /* BNRDateChangeController.xib */,
 				A4A7C74F1BE53E76007D2582 /* BNRItemStore.h */,
 				A4A7C7501BE53E76007D2582 /* BNRItemStore.m */,
+				A47852DC1C3336D200C66B78 /* BNRAssetTypeViewController.h */,
+				A47852DD1C3336D200C66B78 /* BNRAssetTypeViewController.m */,
 				A4A7C7491BE53406007D2582 /* BNRItemsViewController.h */,
 				A4A7C74A1BE53406007D2582 /* BNRItemsViewController.m */,
 				A4AE19AD1C2357FC002B807C /* BNRImageViewController.h */,
@@ -339,6 +344,7 @@
 				A4A7C7511BE53E76007D2582 /* BNRItemStore.m in Sources */,
 				A47852DB1C32D2B800C66B78 /* BNRItem.m in Sources */,
 				A47852C91C32B1F500C66B78 /* BNRImageTransformer.m in Sources */,
+				A47852DE1C3336D200C66B78 /* BNRAssetTypeViewController.m in Sources */,
 				A4A7C74B1BE53406007D2582 /* BNRItemsViewController.m in Sources */,
 				A47852C61C32B01A00C66B78 /* Homepwner.xcdatamodeld in Sources */,
 				A47852DA1C32D2B800C66B78 /* BNRItem+CoreDataProperties.m in Sources */,

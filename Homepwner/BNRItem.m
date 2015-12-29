@@ -39,4 +39,13 @@
     UIGraphicsEndImageContext();
 }
 
+- (void)awakeFromInsert
+{
+    [super awakeFromInsert];
+    
+    NSUUID *uuid = [[NSUUID alloc] init];
+    NSString *key = [uuid UUIDString];
+    self.itemKey = key;
+}
+
 @end

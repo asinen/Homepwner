@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BNRDetailViewController">
             <connections>
+                <outlet property="assetTypeButton" destination="aed-tn-h5O" id="b5O-hA-eCp"/>
                 <outlet property="dateLabel" destination="paa-g9-VGl" id="GNp-Ui-Job"/>
                 <outlet property="deleteImageButton" destination="5ig-W8-Y64" id="gLX-JI-uRU"/>
                 <outlet property="imageView" destination="8Ae-aM-RaJ" id="EOG-pB-Gew"/>
@@ -109,6 +110,12 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="pUo-Mi-U5D"/>
+                        <barButtonItem title="assetType" id="aed-tn-h5O">
+                            <connections>
+                                <action selector="showAssetTypePicker:" destination="-1" id="Qgl-FZ-Imz"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="7e9-sg-oYe"/>
                         <barButtonItem systemItem="trash" id="5ig-W8-Y64">
                             <connections>
                                 <action selector="deleteImage:" destination="-1" id="KbK-zM-VVd"/>

@@ -11,6 +11,7 @@
 #import "BNRDateChangeController.h"
 #import "BNRImageStore.h"
 #import "BNRItemStore.h"
+#import "BNRAssetTypeViewController.h"
 
 @interface BNRDetailViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate,UITextFieldDelegate, UIPopoverControllerDelegate>
 
@@ -26,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *serialNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *valueLabel;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *assetTypeButton;
 
 @end
 
@@ -42,6 +44,14 @@
 }
 - (IBAction)backgroundTapped:(id)sender {
     [self.view endEditing:YES];
+}
+- (IBAction)showAssetTypePicker:(id)sender {
+    [self.view endEditing:YES];
+    
+    BNRAssetTypeViewController *avc = [[BNRAssetTypeViewController alloc] init];
+    avc.item = self.item;
+    
+    [self.navigationController pushViewController:avc animated:YES];
 }
 - (IBAction)takePicture:(id)sender {
     if ([self.imagePickerPopover isPopoverVisible]) {
@@ -167,6 +177,12 @@
     }else
         self.deleteImageButton.enabled = NO;
 //    self.valueField.enablesReturnKeyAutomatically = YES;
+    NSString *typeLabel = [self.item.assetType valueForKey:@"label"];
+    if (!typeLabel) {
+        typeLabel = @"None";
+    }
+    
+    self.assetTypeButton.title = [NSString stringWithFormat:@"Type: %@", typeLabel];
     
     [self updateFonts];
 }
