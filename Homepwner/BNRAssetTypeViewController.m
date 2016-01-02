@@ -13,6 +13,7 @@
 @interface BNRAssetTypeViewController () <UIAlertViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic) UIAlertView *addAssetAlert;
+@property (nonatomic) NSMutableArray *itemsOfType;
 
 @end
 
@@ -68,41 +69,90 @@
     }
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return @"Asset Types";
+    }
+    else return @"All items of selected Asset Type";
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[[BNRItemStore sharedStore] allAssetTypes] count];
+    if (section == 0) {
+        return [[[BNRItemStore sharedStore] allAssetTypes] count];
+    } else {
+        NSArray *allItems = [[[BNRItemStore sharedStore] allItems] mutableCopy];
+        self.itemsOfType = [[NSMutableArray alloc] init];
+        
+        if (!self.item.assetType) {
+            return 0;
+        }
+        
+        for (BNRItem *item in allItems) {
+            
+            if (item.assetType == self.item.assetType) {
+                [self.itemsOfType addObject:item];
+            }
+        }
+        return [self.itemsOfType count];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
-    
-    NSArray *allAssets = [[BNRItemStore sharedStore] allAssetTypes];
-    NSManagedObject *assetType = allAssets[indexPath.row];
-    
-    NSString *assetLable = [assetType valueForKey:@"label"];
-    cell.textLabel.text = assetLable;
-    
-    if (assetType == self.item.assetType) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    if (indexPath.section == 0) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"
+                                                                forIndexPath:indexPath];
+        NSArray *allAssets = [[BNRItemStore sharedStore] allAssetTypes];
+        NSManagedObject *assetType = allAssets[indexPath.row];
+        
+        // Use key-value coding to get the asset type's label
+        NSString *assetLabel = [assetType valueForKey:@"label"];
+        cell.textLabel.text = assetLabel;
+        
+        // Checkmark the one that is currently selected
+        if (assetType == self.item.assetType) {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+        
+        return cell;
     } else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"
+                                                                forIndexPath:indexPath];
+        //NSArray *allItems = [[BNRItemStore sharedStore] allItems];
+        BNRItem *item = self.itemsOfType[indexPath.row];
+        
+        
+        cell.textLabel.text = item.itemName;
+        
+        return cell;
+
     }
-    
-    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    
-    NSArray *allAssets = [[BNRItemStore sharedStore] allAssetTypes];
-    NSManagedObject *assetType = allAssets[indexPath.row];
-    self.item.assetType = assetType;
-    
-    [self.navigationController popViewControllerAnimated:YES];
+    if (indexPath.section == 0) {
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        
+        NSArray *allAssets = [[BNRItemStore sharedStore] allAssetTypes];
+        NSManagedObject *assetType = allAssets[indexPath.row];
+        self.item.assetType = assetType;
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 @end
