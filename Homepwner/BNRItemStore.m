@@ -208,4 +208,12 @@
     
     return _allAssetTypes;
 }
+
+- (void)createAssetWithName:(NSString *)assetName
+{
+    NSManagedObject *asset = [NSEntityDescription insertNewObjectForEntityForName:@"BNRAssetType" inManagedObjectContext:self.context];
+    [asset setValue:assetName forKey:@"label"];
+    
+    [_allAssetTypes addObject:asset];
+}
 @end
