@@ -51,7 +51,15 @@
     BNRAssetTypeViewController *avc = [[BNRAssetTypeViewController alloc] init];
     avc.item = self.item;
     
-    [self.navigationController pushViewController:avc animated:YES];
+    //Display in popover for ipad
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        self.imagePickerPopover = [[UIPopoverController alloc] initWithContentViewController:avc];
+        self.imagePickerPopover.delegate = self;
+        [self.imagePickerPopover presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    } else {
+        [self.navigationController pushViewController:avc animated:YES];
+    }
+    
 }
 - (IBAction)takePicture:(id)sender {
     if ([self.imagePickerPopover isPopoverVisible]) {
@@ -251,6 +259,12 @@
 {
     NSLog(@"User dismissed popover");
     self.imagePickerPopover = nil;
+    
+    NSString *typelabel = [self.item.assetType valueForKey:@"label"];
+    if (!typelabel) {
+        typelabel = @"None";
+    }
+    self.assetTypeButton.title = [NSString stringWithFormat:@"Type: %@", typelabel];
 }
 
 - (instancetype)initForNewItem:(BOOL)isNew
