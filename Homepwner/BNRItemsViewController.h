@@ -10,6 +10,6 @@
 #import "BNRDetailViewController.h"
 #import "BNRItemCell.h"
 
-@interface BNRItemsViewController : UITableViewController
+@interface BNRItemsViewController : UITableViewController <UIViewControllerRestoration>
 
 @end

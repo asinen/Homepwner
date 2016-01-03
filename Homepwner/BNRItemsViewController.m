@@ -12,7 +12,7 @@
 #import "BNRImageStore.h"
 #import "BNRImageViewController.h"
 
-@interface BNRItemsViewController () <UIPopoverControllerDelegate>
+@interface BNRItemsViewController () <UIPopoverControllerDelegate, UIDataSourceModelAssociation>
 @property (nonatomic, strong) UIPopoverController *imagePopover;
 
 //@property (nonatomic, strong) IBOutlet UIView *headerView;
@@ -37,6 +37,7 @@
     };
     
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+    navController.restorationIdentifier = NSStringFromClass([navController class]);
     
     navController.modalPresentationStyle = UIModalPresentationFormSheet;
 
@@ -51,7 +52,10 @@
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
         UINavigationItem *navItem = self.navigationItem;
-        navItem.title = @"Homepwner";
+        navItem.title = NSLocalizedString(@"Homepwner", @"Name of application");
+        
+        self.restorationIdentifier = NSStringFromClass([self class]);
+        self.restorationClass = [self class];
         
         UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewItem:)];
         
@@ -61,8 +65,15 @@
         
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
         [nc addObserver:self selector:@selector(updateTableViewForDynamicTypeSize) name:UIContentSizeCategoryDidChangeNotification object:nil];
+        
+        [nc addObserver:self selector:@selector(localeChanged:) name:NSCurrentLocaleDidChangeNotification object:nil];
     }
     return self;
+}
+
+- (void)localeChanged: (NSNotification *)note
+{
+    [self.tableView reloadData];
 }
 
 - (void)dealloc
@@ -89,7 +100,13 @@
         BNRItem *item = items[indexPath.row];
         cell.nameLabel.text = item.itemName;
         cell.serialNumberLabel.text = item.serialNumber;
-        cell.valueLabel.text = [NSString stringWithFormat:@"$%d", item.valueInDollars];
+        
+        static NSNumberFormatter *currencyFormatter = nil;
+        if (currencyFormatter == nil) {
+            currencyFormatter = [[NSNumberFormatter alloc] init];
+            currencyFormatter.numberStyle = NSNumberFormatterCurrencyStyle;
+        }
+        cell.valueLabel.text = [currencyFormatter stringFromNumber:@(item.valueInDollars)];
         if (item.valueInDollars > 50) {
             cell.valueLabel.textColor = [UIColor greenColor];
         } else
@@ -133,6 +150,8 @@
     UINib *nib = [UINib nibWithNibName:@"BNRItemCell" bundle:nil];
     
     [self.tableView registerNib:nib forCellReuseIdentifier:@"BNRItemCell"];
+    
+    self.tableView.restorationIdentifier = @"BNRItemsViewControllerTableView";
     
 }
 
@@ -228,6 +247,54 @@
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
 {
     self.imagePopover = nil;
+}
+
++ (UIViewController *)viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder
+{
+    return [[self alloc] init];
+}
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [coder encodeBool:self.isEditing forKey:@"TableViewIsEditing"];
+    
+    [super encodeRestorableStateWithCoder:coder];
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    self.editing = [coder decodeBoolForKey:@"TableViewIsEditing"];
+    
+    [super decodeRestorableStateWithCoder:coder];
+}
+
+- (NSString *)modelIdentifierForElementAtIndexPath:(NSIndexPath *)idx inView:(UIView *)view
+{
+    NSString *identifier = nil;
+    if (idx && view) {
+        BNRItem *item = [[BNRItemStore sharedStore] allItems][idx.row];
+        identifier = item.itemKey;
+    }
+    
+    return identifier;
+}
+
+- (NSIndexPath *)indexPathForElementWithModelIdentifier:(NSString *)identifier inView:(UIView *)view
+{
+    NSIndexPath *indexPath = nil;
+    
+    if (identifier && view) {
+        NSArray *items = [[BNRItemStore sharedStore] allItems];
+        for (BNRItem *item in items) {
+            if ([identifier isEqualToString:item.itemKey]) {
+                int row = [items indexOfObjectIdenticalTo:item];
+                indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+                break;
+            }
+        }
+    }
+    
+    return indexPath;
 }
 
 @end

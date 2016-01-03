@@ -12,6 +12,7 @@
 #import "BNRImageStore.h"
 #import "BNRItemStore.h"
 #import "BNRAssetTypeViewController.h"
+#import "AppDelegate.h"
 
 @interface BNRDetailViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate,UITextFieldDelegate, UIPopoverControllerDelegate>
 
@@ -187,10 +188,10 @@
 //    self.valueField.enablesReturnKeyAutomatically = YES;
     NSString *typeLabel = [self.item.assetType valueForKey:@"label"];
     if (!typeLabel) {
-        typeLabel = @"None";
+        typeLabel = NSLocalizedString(@"None", @"Type label None");
     }
     
-    self.assetTypeButton.title = [NSString stringWithFormat:@"Type: %@", typeLabel];
+    self.assetTypeButton.title = [NSString stringWithFormat:NSLocalizedString(@"Type: %@", @"Asset type button"), typeLabel];
     
     [self updateFonts];
 }
@@ -204,8 +205,15 @@
     BNRItem *item = self.item;
     item.itemName = self.nameField.text;
     item.serialNumber = self.serialNumberField.text;
-    item.valueInDollars = [self.valueField.text intValue];
     
+    int newValue = [self.valueField.text intValue];
+    
+    if (newValue != item.valueInDollars) {
+        item.valueInDollars = newValue;
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setInteger:newValue forKey:BNRNextItemValuePrefsKey];
+    }
 }
 
 - (void)setItem:(BNRItem *)item
@@ -272,6 +280,8 @@
     self = [super initWithNibName:nil bundle:nil];
     
     if (self) {
+        self.restorationIdentifier = NSStringFromClass([self class]);
+        self.restorationClass = [self class];
         if (isNew) {
             UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(save:)];
             self.navigationItem.rightBarButtonItem = doneItem;
@@ -325,4 +335,42 @@
     self.serialNumberField.font = font;
     self.valueField.font = font;
 }
+
++ (UIViewController *)viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder
+{
+    BOOL isNew = NO;
+    if ([identifierComponents count] == 3) {
+        isNew = YES;
+    }
+    
+    return [[self alloc] initForNewItem:isNew];
+}
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:self.item.itemKey forKey:@"item.itemKey"];
+    
+    self.item.itemName = self.nameField.text;
+    self.item.serialNumber = self.serialNumberField.text;
+    self.item.valueInDollars = [self.valueField.text intValue];
+    
+    [[BNRItemStore sharedStore] saveChanges];
+    
+    [super encodeRestorableStateWithCoder:coder];
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    NSString *itemKey = [coder decodeObjectForKey:@"item.itemKey"];
+    
+    for (BNRItem *item in [[BNRItemStore sharedStore] allItems]) {
+        if ([itemKey isEqualToString:item.itemKey]) {
+            self.item = item;
+            break;
+        }
+    }
+    
+    [super decodeRestorableStateWithCoder:coder];
+}
 @end
+

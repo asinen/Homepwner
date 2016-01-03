@@ -1,0 +1,18 @@
+
+/* Class = "UIButton"; normalTitle = "Change Date"; ObjectID = "7ha-2V-jHs"; */
+"7ha-2V-jHs.normalTitle" = "更改日期";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "bHj-em-5Gg"; */
+"bHj-em-5Gg.text" = "价值";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "byY-gl-B0T"; */
+"byY-gl-B0T.text" = "名字";
+
+/* Class = "UILabel"; text = "Serial"; ObjectID = "lQa-qA-6fY"; */
+"lQa-qA-6fY.text" = "序列号";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "paa-g9-VGl"; */
+"paa-g9-VGl.text" = "标签";
+
+/* Class = "UIBarButtonItem"; title = "assetType"; ObjectID = "ucY-ne-F5R"; */
+"ucY-ne-F5R.title" = "分类";

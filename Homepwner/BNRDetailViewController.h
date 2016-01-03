@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class BNRItem;
 
-@interface BNRDetailViewController : UIViewController
+@interface BNRDetailViewController : UIViewController <UIViewControllerRestoration>
 
 - (instancetype)initForNewItem:(BOOL)isNew;
 

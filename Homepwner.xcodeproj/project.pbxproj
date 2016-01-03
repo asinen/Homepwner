@@ -13,6 +13,9 @@
 		A47852DA1C32D2B800C66B78 /* BNRItem+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A47852D71C32D2B800C66B78 /* BNRItem+CoreDataProperties.m */; };
 		A47852DB1C32D2B800C66B78 /* BNRItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A47852D91C32D2B800C66B78 /* BNRItem.m */; };
 		A47852DE1C3336D200C66B78 /* BNRAssetTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47852DD1C3336D200C66B78 /* BNRAssetTypeViewController.m */; };
+		A47852DF1C38706F00C66B78 /* BNRDetailViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = A47852E11C38706F00C66B78 /* BNRDetailViewController~iphone.xib */; };
+		A47852E81C39296200C66B78 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A47852EA1C39296200C66B78 /* Localizable.strings */; };
+		A47852EF1C39418D00C66B78 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A47852EE1C39418D00C66B78 /* Settings.bundle */; };
 		A4A7C71E1BE52CDE007D2582 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C71D1BE52CDE007D2582 /* main.m */; };
 		A4A7C7211BE52CDE007D2582 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C7201BE52CDE007D2582 /* AppDelegate.m */; };
 		A4A7C7231BE52CDE007D2582 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4A7C7221BE52CDE007D2582 /* Assets.xcassets */; };
@@ -27,7 +30,6 @@
 		A4AE19AA1C230A49002B807C /* BNRItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4AE19A91C230A49002B807C /* BNRItemCell.m */; };
 		A4AE19AC1C230AB8002B807C /* BNRItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4AE19AB1C230AB8002B807C /* BNRItemCell.xib */; };
 		A4AE19AF1C2357FC002B807C /* BNRImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4AE19AE1C2357FC002B807C /* BNRImageViewController.m */; };
-		A4D8FF7C1C0F5E6D00543D0C /* BNRDetailViewController~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4D8FF7B1C0F5E6D00543D0C /* BNRDetailViewController~iphone.xib */; };
 		A4D8FF801C0F817C00543D0C /* BNRDetailViewController~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4D8FF7F1C0F817C00543D0C /* BNRDetailViewController~ipad.xib */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +62,14 @@
 		A47852D91C32D2B800C66B78 /* BNRItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNRItem.m; sourceTree = "<group>"; };
 		A47852DC1C3336D200C66B78 /* BNRAssetTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNRAssetTypeViewController.h; sourceTree = "<group>"; };
 		A47852DD1C3336D200C66B78 /* BNRAssetTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNRAssetTypeViewController.m; sourceTree = "<group>"; };
+		A47852E31C3921C600C66B78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = "Base.lproj/BNRDetailViewController~iphone.xib"; sourceTree = "<group>"; };
+		A47852E41C39222100C66B78 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "en.lproj/BNRDetailViewController~iphone.strings"; sourceTree = "<group>"; };
+		A47852E51C39222A00C66B78 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = "es.lproj/BNRDetailViewController~iphone.strings"; sourceTree = "<group>"; };
+		A47852E91C39296200C66B78 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A47852EB1C39296E00C66B78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A47852EC1C392A5F00C66B78 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/BNRDetailViewController~iphone.strings"; sourceTree = "<group>"; };
+		A47852ED1C392A5F00C66B78 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		A47852EE1C39418D00C66B78 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		A4A7C7191BE52CDE007D2582 /* Homepwner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Homepwner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4A7C71D1BE52CDE007D2582 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A4A7C71F1BE52CDE007D2582 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -87,7 +97,6 @@
 		A4AE19AB1C230AB8002B807C /* BNRItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BNRItemCell.xib; sourceTree = "<group>"; };
 		A4AE19AD1C2357FC002B807C /* BNRImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNRImageViewController.h; sourceTree = "<group>"; };
 		A4AE19AE1C2357FC002B807C /* BNRImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNRImageViewController.m; sourceTree = "<group>"; };
-		A4D8FF7B1C0F5E6D00543D0C /* BNRDetailViewController~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BNRDetailViewController~iphone.xib"; sourceTree = "<group>"; };
 		A4D8FF7F1C0F817C00543D0C /* BNRDetailViewController~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "BNRDetailViewController~ipad.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -153,8 +162,10 @@
 				A4A7C7201BE52CDE007D2582 /* AppDelegate.m */,
 				A4A7C7541BE80FE2007D2582 /* BNRDetailViewController.h */,
 				A4A7C7551BE80FE2007D2582 /* BNRDetailViewController.m */,
-				A4D8FF7B1C0F5E6D00543D0C /* BNRDetailViewController~iphone.xib */,
+				A47852EE1C39418D00C66B78 /* Settings.bundle */,
+				A47852E11C38706F00C66B78 /* BNRDetailViewController~iphone.xib */,
 				A4D8FF7F1C0F817C00543D0C /* BNRDetailViewController~ipad.xib */,
+				A47852EA1C39296200C66B78 /* Localizable.strings */,
 				A4711E331BF3BBE000FB4D02 /* BNRImageStore.h */,
 				A4711E341BF3BBE000FB4D02 /* BNRImageStore.m */,
 				A4A7C7591BE96306007D2582 /* BNRDateChangeController.h */,
@@ -290,6 +301,8 @@
 			knownRegions = (
 				en,
 				Base,
+				es,
+				"zh-Hans",
 			);
 			mainGroup = A4A7C7101BE52CDE007D2582;
 			productRefGroup = A4A7C71A1BE52CDE007D2582 /* Products */;
@@ -308,9 +321,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4D8FF7C1C0F5E6D00543D0C /* BNRDetailViewController~iphone.xib in Resources */,
+				A47852EF1C39418D00C66B78 /* Settings.bundle in Resources */,
+				A47852DF1C38706F00C66B78 /* BNRDetailViewController~iphone.xib in Resources */,
 				A4AE19AC1C230AB8002B807C /* BNRItemCell.xib in Resources */,
 				A4A7C7231BE52CDE007D2582 /* Assets.xcassets in Resources */,
+				A47852E81C39296200C66B78 /* Localizable.strings in Resources */,
 				A4A7C75D1BE96306007D2582 /* BNRDateChangeController.xib in Resources */,
 				A4A7C7261BE52CDE007D2582 /* LaunchScreen.storyboard in Resources */,
 				A4D8FF801C0F817C00543D0C /* BNRDetailViewController~ipad.xib in Resources */,
@@ -387,6 +402,27 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		A47852E11C38706F00C66B78 /* BNRDetailViewController~iphone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A47852E31C3921C600C66B78 /* Base */,
+				A47852E41C39222100C66B78 /* en */,
+				A47852E51C39222A00C66B78 /* es */,
+				A47852EC1C392A5F00C66B78 /* zh-Hans */,
+			);
+			name = "BNRDetailViewController~iphone.xib";
+			sourceTree = "<group>";
+		};
+		A47852EA1C39296200C66B78 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A47852E91C39296200C66B78 /* es */,
+				A47852EB1C39296E00C66B78 /* Base */,
+				A47852ED1C392A5F00C66B78 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		A4A7C7241BE52CDE007D2582 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
